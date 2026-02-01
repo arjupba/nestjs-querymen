@@ -24,7 +24,7 @@ const schema = {
 export class UsersController {
   @Get()
   @UseQueryMen(schema)
-    findAll(@QueryMen() q: QueryMenType) {
+  findAll(@QueryMen() q: QueryMenType) {
     // q.query  -> filters
     // q.select -> fields projection
     // q.cursor -> pagination/sort info
