@@ -1,6 +1,6 @@
 {
   "name": "nestjs-querymen",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "NestJS Wrapper for querymen",
   "license": "MIT",
   "author": "Arjun Gangadharan <arjupba@gmail.com>",
@@ -22,5 +22,20 @@
     "@nestjs/common": "^11.1.12",
     "@nestjs/swagger": "^11.2.5",
     "querymen": "^2.1.4"
-  }
+  },
+  "keywords": [
+    "nestjs",
+    "nest",
+    "querymen",
+    "pagination",
+    "filtering",
+    "sorting",
+    "middleware",
+    "interceptor",
+    "swagger",
+    "mongodb",
+    "mongoose",
+    "query",
+    "querystring"
+  ]
 }
