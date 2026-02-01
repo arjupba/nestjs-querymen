@@ -1,0 +1,26 @@
+{
+  "name": "nestjs-querymen",
+  "version": "1.0.0",
+  "description": "NestJS Wrapper for querymen",
+  "license": "MIT",
+  "author": "Arjun Gangadharan <arjupba@gmail.com>",
+  "type": "commonjs",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "devDependencies": {
+    "@types/node": "^25.1.0",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@nestjs/common": "^11.1.12",
+    "@nestjs/swagger": "^11.2.5",
+    "querymen": "^2.1.4"
+  }
+}
