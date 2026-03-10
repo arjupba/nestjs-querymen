@@ -14,6 +14,15 @@ import { ApiQuery } from "@nestjs/swagger";
 import { middleware as query } from "querymen";
 import { Observable } from "rxjs";
 
+const DEFAULT_QUERY_FIELDS = new Set(["limit", "page", "sort", "fields", "q"]);
+
+const getSwaggerType = (value: any) => {
+  if (value?.type === Number || value === Number) return Number;
+  if (value?.type === Boolean || value === Boolean) return Boolean;
+  if (value?.type === Date || value === Date) return Date;
+  return String;
+};
+
 export type QueryMenType = {
   query: any;
   select: any;
@@ -48,15 +57,33 @@ export function QueryMenInterceptor(
   return mixin(QueryMenInterceptorMixin);
 }
 
-export const UseQueryMen = (schema: any, config: any = {}) =>
-  applyDecorators(
+export const UseQueryMen = (schema: any, config: any = {}) => {
+  const decorators: MethodDecorator[] = [
     ApiQuery({ name: "limit", required: false, type: Number }),
     ApiQuery({ name: "page", required: false, type: Number }),
     ApiQuery({ name: "sort", required: false, type: String }),
     ApiQuery({ name: "fields", required: false, type: String }),
     ApiQuery({ name: "q", required: false, type: String }),
-    UseInterceptors(QueryMenInterceptor(schema, config)),
-  );
+  ];
+
+  const queryFields = schema ?? {};
+
+  Object.entries(queryFields).forEach(([key, value]: [string, any]) => {
+    if (DEFAULT_QUERY_FIELDS.has(key)) return;
+
+    decorators.push(
+      ApiQuery({
+        name: key,
+        required: false,
+        type: getSwaggerType(value),
+      }),
+    );
+  });
+
+  decorators.push(UseInterceptors(QueryMenInterceptor(schema, config)));
+
+  return applyDecorators(...decorators);
+};
 
 export const QueryMen = createParamDecorator(
   async (_, context: ExecutionContext) => {
